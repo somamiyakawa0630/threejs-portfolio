@@ -1,0 +1,213 @@
+/* ─── リセット ─────────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #1a1a2e;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ─── Canvas ────────────────────────────────────────────── */
+#myCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  outline: none;
+}
+
+/* ─── ヘッダー ──────────────────────────────────────────── */
+#main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  padding: 12px 20px;
+
+  background: rgba(5, 8, 20, 0.82);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+
+  border-bottom: 1px solid rgba(148, 87, 235, 0.3);
+  box-shadow:
+    0 4px 30px rgba(0, 200, 255, 0.12),
+    inset 0 -1px 0 rgba(148, 87, 235, 0.2);
+
+  pointer-events: auto;
+  animation: slideDown 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── ナビ：3ボタンで横幅を均等に埋める ──────────────── */
+.header-nav {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  width: 100%;
+}
+
+/* ─── ボタン共通 ─────────────────────────────────────────── */
+.nav-btn {
+  flex: 1;                       /* 3つで均等に横幅を分割 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border: 1.5px solid rgba(148, 87, 235, 0.65);
+  border-radius: 14px;
+  background: rgba(0, 200, 255, 0.1);
+  color: #9457EB;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+
+  text-shadow: 0 0 10px rgba(148, 87, 235, 0.65);
+  box-shadow:
+    0 0 12px rgba(0, 200, 255, 0.2),
+    inset 0 0 10px rgba(0, 200, 255, 0.06);
+
+  opacity: 1;
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+#btn-about  { animation-delay: 0.3s; }
+#btn-arcade { animation-delay: 0.45s; }
+#btn-light  { animation-delay: 0.6s; }
+
+@keyframes popIn {
+  from { transform: scale(0.85) translateY(-8px); opacity: 0; }
+  to   { transform: scale(1)    translateY(0);    opacity: 1; }
+}
+
+.nav-btn:hover {
+  background: rgba(0, 200, 255, 0.2);
+  border-color: rgba(148, 87, 235, 1);
+  color: #a777eb;
+  box-shadow:
+    0 0 22px rgba(148, 87, 235, 0.55),
+    0 0 44px rgba(0, 200, 255, 0.2),
+    inset 0 0 14px rgba(0, 200, 255, 0.1);
+  text-shadow: 0 0 14px rgba(148, 87, 235, 1);
+  transform: translateY(-2px);
+}
+
+.nav-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* ─── ボタンアイコン ─────────────────────────────────────── */
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.btn-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  filter: drop-shadow(0 0 5px rgba(148, 87, 235, 0.8));
+}
+
+/* ─── ライトボタン ───────────────────────────────────────── */
+.light-btn {
+  border-color: rgba(255, 220, 80, 0.65);
+  color: #ffe87a;
+  text-shadow: 0 0 10px rgba(255, 220, 80, 0.7);
+  background: rgba(255, 200, 0, 0.08);
+  box-shadow:
+    0 0 12px rgba(255, 200, 0, 0.2),
+    inset 0 0 10px rgba(255, 200, 0, 0.05);
+}
+
+.light-btn .btn-icon svg {
+  filter: drop-shadow(0 0 5px rgba(255, 220, 80, 0.8));
+}
+
+.light-btn:hover {
+  background: rgba(255, 200, 0, 0.18);
+  border-color: rgba(255, 220, 80, 1);
+  color: #fff5aa;
+  box-shadow:
+    0 0 24px rgba(255, 200, 0, 0.55),
+    0 0 48px rgba(255, 200, 0, 0.2),
+    inset 0 0 14px rgba(255, 200, 0, 0.1);
+  text-shadow: 0 0 16px rgba(255, 220, 80, 1);
+}
+
+.light-btn.light-off {
+  border-color: rgba(120, 120, 150, 0.4);
+  color: #888aaa;
+  text-shadow: none;
+  background: rgba(120, 120, 150, 0.06);
+  box-shadow: none;
+}
+
+.light-btn.light-off .btn-icon svg {
+  filter: none;
+}
+
+.light-btn.light-off:hover {
+  background: rgba(130, 130, 160, 0.14);
+  border-color: rgba(160, 160, 200, 0.7);
+  color: #aaaacc;
+  box-shadow: 0 0 12px rgba(130, 130, 160, 0.2);
+}
+
+/* ─── レスポンシブ ───────────────────────────────────────── */
+@media (max-width: 600px) {
+  #main-header { padding: 8px 10px; }
+  .nav-btn { padding: 12px 10px; font-size: 13px; gap: 8px; }
+  .btn-icon { width: 20px; height: 20px; }
+}
+
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #2E1652; /* シーンの背景色と合わせる */
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: opacity 0.8s ease;
+}
+
+.loading-text {
+  color: #DCC4FF;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+ 0% { opacity: 0.2; }
+ 50% { opacity: 1; }
+ 00% { opacity: 0.2; }
+}
